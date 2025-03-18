@@ -1,0 +1,58 @@
+﻿@model CategoryViewModel
+
+@{
+    ViewData["Title"] = Model?.Name ?? "Category";
+}
+
+<!-- Category Information -->
+<div class="card mb-4">
+    <div class="card-body text-center">
+        <h4 class="card-title">@Model?.Name</h4>
+    </div>
+</div>
+
+<!-- Products under this Category -->
+<h3 class="mb-3">@Model?.Name Products</h3>
+
+@if (Model?.Products != null && Model.Products.Any())
+{
+    <div class="row">
+        @foreach (var product in Model.Products)
+        {
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 shadow-sm">
+                    <a asp-controller="Product" asp-action="Details" asp-route-id="@product.Id" class="text-decoration-none text-dark">
+                        <img src="@(string.IsNullOrEmpty(product.ImageUrl) ? "/images/default-product.png" : product.ImageUrl)"
+                             class="card-img-top"
+                             alt="@product.Name"
+                             style="height: 200px; object-fit: cover;">
+                        <div class="card-body text-center">
+                            <h5 class="card-title">@product.Name</h5>
+                            <p class="card-text text-muted">₹@product.Price</p>
+                        </div>
+                    </a>
+
+                    <!-- Add to Cart Button -->
+                    <div class="card-footer text-center">
+                        <form asp-controller="Cart" asp-action="AddToCart" method="post">
+                            <input type="hidden" name="productId" value="@product.Id" />
+                            <input type="hidden" name="productName" value="@product.Name" />
+                            <input type="hidden" name="price" value="@product.Price" />
+                            <input type="hidden" name="quantity" value="1" />
+                            <button type="submit" class="btn btn-success">Add to Cart</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
+else
+{
+    <p class="text-muted">No products available in this category.</p>
+}
+
+<!-- Back to Categories -->
+<div class="mt-4">
+    <a asp-action="Index" class="btn btn-primary">Back to Categories</a>
+</div>

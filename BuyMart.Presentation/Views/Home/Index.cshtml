@@ -1,0 +1,68 @@
+﻿@{
+    ViewData["Title"] = "Home";
+    string userId = Context.Session.GetString("UserId"); // ✅ Correct way
+    string username = Context.Session.GetString("Username");
+}
+
+<div class="container mt-5">
+    <!-- Welcome Section -->
+    <div class="text-center">
+        <h1 class="display-4 fw-bold">Welcome to BuyMart</h1>
+        <p class="lead text-muted">Your one-stop shop for quality products at the best prices.</p>
+        <a asp-controller="Category" asp-action="Index" class="btn btn-primary btn-lg shadow">
+            🛍️ Start Shopping
+        </a>
+    </div>
+
+    <hr class="my-5" />
+
+    <!-- Featured Categories -->
+    <h2 class="text-center fw-bold mb-4">Explore Our Categories</h2>
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        <div class="col">
+            <div class="card border-0 shadow-sm h-100">
+                <a asp-controller="Product" asp-action="Index" asp-route-category="Electronics">
+                    <img src="https://th.bing.com/th/id/OIP.5k8xtdEpB82aUSNURMtVOAHaEK?rs=1&pid=ImgDetMain"
+                         class="card-img-top img-fluid rounded-top" alt="Electronics">
+                </a>
+                <div class="card-body text-center">
+                    <h5 class="fw-bold">Electronics</h5>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card border-0 shadow-sm h-100">
+                <a asp-controller="Product" asp-action="Index" asp-route-category="Clothing">
+                    <img src="https://th.bing.com/th/id/OIP.Kc4LEsU19nGbEmxMFyG9fAHaFI?rs=1&pid=ImgDetMain"
+                         class="card-img-top img-fluid rounded-top" alt="Clothing">
+                </a>
+                <div class="card-body text-center">
+                    <h5 class="fw-bold">Clothing</h5>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card border-0 shadow-sm h-100">
+                <a asp-controller="Product" asp-action="Index" asp-route-category="Books">
+                    <img src="https://th.bing.com/th/id/OIP.n3sAXxDyR0gM6xT1ZwmXdQHaE8?rs=1&pid=ImgDetMain"
+                         class="card-img-top img-fluid rounded-top" alt="Books">
+                </a>
+                <div class="card-body text-center">
+                    <h5 class="fw-bold">Books</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <hr class="my-5" />
+
+    @if (string.IsNullOrEmpty(username))
+    {
+        <div class="text-center">
+            <h3 class="fw-bold">Sign up now and start shopping!</h3>
+            <a asp-controller="Auth" asp-action="Register" class="btn btn-success btn-lg shadow mt-3">
+                ✨ Create Account
+            </a>
+        </div>
+    }
+</div>
